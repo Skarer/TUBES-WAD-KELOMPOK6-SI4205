@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
- */
+*/
 
 Route::get('/', function () {
     return view('auth.login');
@@ -61,10 +62,8 @@ Route::delete('/absen/delete/{attedance:id}', 'AttedanceController@destroy');
 //kegiatan
 Route::get('/homeguru', 'EventController@index');
 
-Route::get('/homeguru/create', 'EventController@create');
+Route::get('/homeguru/create','EventController@create');
 Route::post('/homeguru/create/store', 'EventController@store');
-
-Route::get('/homesiswa/join', 'KegiatanController@join');
 
 Route::get('/homeguru/edit/{event:id}', 'EventController@edit');
 Route::patch('/homeguru/edit/{event:id}/update', 'EventController@update');
@@ -86,10 +85,15 @@ Route::get('/pelajaransiswa/cari', 'PelajaranController@cari');
 //profil
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('profile', 'ProfilsiswaController@edit')->name('profile.edit');
+Route::get('profile', 'ProfilsiswaController@edit')->name('profile.edit');
 
-    Route::get('profile/guru', 'ProfilguruController@edit');
+Route::get('profile/guru', 'ProfilguruController@edit');
 
-    Route::post('profile', 'ProfilsiswaController@update')->name('profile.update');
+Route::post('profile', 'ProfilsiswaController@update')->name('profile.update');
+//peserta
+Route::get('/peserta', 'PesertaController@index');
 
+Route::get('/peserta/create','PesertaController@create');
+Route::post('/peserta/create/store', 'PesertaController@store');
+Route::get('/peserta/cari', 'PesertaController@cari');
 });

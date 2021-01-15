@@ -1,7 +1,7 @@
-@extends('layout.mainsiswa')
+@extends('layout.mainguru')
 <!-- buat manggil navbar, title yg ada di file main.blade -->
 
-@section('title', 'Home Siswa')
+@section('title', 'Home Guru')
 
 <!--buat nama title webnya -->
 
@@ -36,13 +36,26 @@
                 </div>
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
+
+                    <li class="list-group-item" style="margin-left: 7px;">
                     <div class="row">
-                        <div class="col" style="margin-left:100px">
-                            <a href="/homesiswa/join" class="btn btn-success">Join</a>
+                        <div class="col" style="margin-left:-7px">
+                            <a href="/homeguru/edit/{{$event->id}}" class="btn btn-primary">Edit</a>
+                        </div>
+                        <div class="col" style="margin-left:-27px">
+                            <a href="/peserta" class="btn btn-warning">Peserta</a>
+                        </div>
+                        <div class="col" style="margin-left:-6px">
+                            <form action="/homeguru/delete/{{$event->id}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+
+                            <button class="btn btn-danger " type="submit">Hapus</button>
+                            </form>
                         </div>
                         </div>
                     </li>
+
                 </ul>
 
             </div>

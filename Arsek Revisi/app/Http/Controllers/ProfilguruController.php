@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\event;
-use App\Models\kegiatan;
+use App\Models\profilguru;
 use Illuminate\Http\Request;
 
-class KegiatanController extends Controller
+class ProfilguruController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,7 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        $events = event::all();
-        if ($events->isEmpty()) {
-            session()->flash('empty', 'Tidak ada kegiatan');
-        }
-        return view('siswa.kegiatan', compact('events'));
+        
     }
 
     /**
@@ -46,10 +41,10 @@ class KegiatanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\kegiatan  $kegiatan
+     * @param  \App\Models\profilguru  $profilguru
      * @return \Illuminate\Http\Response
      */
-    public function show(kegiatan $kegiatan)
+    public function show(profilguru $profilguru)
     {
         //
     }
@@ -57,22 +52,24 @@ class KegiatanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\kegiatan  $kegiatan
+     * @param  \App\Models\profilguru  $profilguru
      * @return \Illuminate\Http\Response
      */
-    public function edit(kegiatan $kegiatan)
+    public function edit(Request $request)
     {
-        //
+        return view('profile.profilguru', [
+            'user' => $request->user()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\kegiatan  $kegiatan
+     * @param  \App\Models\profilguru  $profilguru
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, kegiatan $kegiatan)
+    public function update(Request $request, profilguru $profilguru)
     {
         //
     }
@@ -80,24 +77,11 @@ class KegiatanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\kegiatan  $kegiatan
+     * @param  \App\Models\profilguru  $profilguru
      * @return \Illuminate\Http\Response
      */
-    public function destroy(kegiatan $kegiatan)
+    public function destroy(profilguru $profilguru)
     {
-
+        //
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
-
-    public function join(kegiatan $kegiatan)
-    {
-        return view('siswa.join', compact('kegiatan'));
-    }
-
 }

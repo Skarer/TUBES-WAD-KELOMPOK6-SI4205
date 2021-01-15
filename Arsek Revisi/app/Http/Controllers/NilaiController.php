@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\event;
-use App\Models\kegiatan;
+use App\Models\nilai;
 use Illuminate\Http\Request;
+use App\Models\score;
+use Illuminate\Support\Facades\DB;
 
-class KegiatanController extends Controller
+class NilaiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +16,8 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        $events = event::all();
-        if ($events->isEmpty()) {
-            session()->flash('empty', 'Tidak ada kegiatan');
-        }
-        return view('siswa.kegiatan', compact('events'));
+        $scores = score::get();
+        return view('siswa.nilai', compact('scores'));
     }
 
     /**
@@ -46,10 +44,10 @@ class KegiatanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\kegiatan  $kegiatan
+     * @param  \App\Models\nilai  $nilai
      * @return \Illuminate\Http\Response
      */
-    public function show(kegiatan $kegiatan)
+    public function show(nilai $nilai)
     {
         //
     }
@@ -57,10 +55,10 @@ class KegiatanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\kegiatan  $kegiatan
+     * @param  \App\Models\nilai  $nilai
      * @return \Illuminate\Http\Response
      */
-    public function edit(kegiatan $kegiatan)
+    public function edit(nilai $nilai)
     {
         //
     }
@@ -69,10 +67,10 @@ class KegiatanController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\kegiatan  $kegiatan
+     * @param  \App\Models\nilai  $nilai
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, kegiatan $kegiatan)
+    public function update(Request $request, nilai $nilai)
     {
         //
     }
@@ -80,24 +78,25 @@ class KegiatanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\kegiatan  $kegiatan
+     * @param  \App\Models\nilai  $nilai
      * @return \Illuminate\Http\Response
      */
-    public function destroy(kegiatan $kegiatan)
+    public function destroy(nilai $nilai)
     {
-
+        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\kegiatan  $kegiatan
-     * @return \Illuminate\Http\Response
-     */
-
-    public function join(kegiatan $kegiatan)
+    public function cari(Request $request) 
     {
-        return view('siswa.join', compact('kegiatan'));
-    }
+        //menangkap data pencarian
+        $cari = $request->cari;
+        
+        //mengambil data dari tabel absen
+        $score = DB::table('scores')
+        ->where('nis','like',"%".$cari."%")
+        ->paginate();
 
+        //mengirim data pegawai ke halaman absen
+        return view('siswa.nilai',['scores' => $score]);
+    }
 }
